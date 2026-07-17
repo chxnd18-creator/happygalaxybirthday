@@ -1,0 +1,95 @@
+﻿body {
+	margin: 0;
+	padding: 0;
+	background: #1a0010;
+	font-size: 20px;
+	font-family: 'Anuphan', 'Helvetica Neue', sans-serif;
+	color: #fff5e6;
+	overflow: auto
+}
+
+a {
+	color: #ff85c2;
+	font-size: 14px;
+}
+
+#main {
+	width: 100%;
+	background: radial-gradient(ellipse at 60% 40%, rgba(180,40,100,0.2), transparent 60%),
+	            radial-gradient(ellipse at 20% 80%, rgba(255,105,180,0.18), transparent 50%),
+	            #1a0010;
+}
+
+#wrap {
+	position: relative;
+	margin: 0 auto;
+	width: 1100px;
+	height: 680px;
+	margin-top: 100px;
+}
+
+#text {
+	width: 400px;
+	height: 425px;
+	left: 60px;
+	top: 80px;
+	position: absolute;
+}
+
+#code {
+	display: none;
+	font-size: 28px;
+	color: #f0e6ff;
+	text-shadow: 0 0 12px rgba(255,150,180,0.6);
+	line-height: 1.6;
+}
+
+#clock-box {
+	position: absolute;
+	left: 60px;
+	top: 570px;
+	font-size: 26px;
+	display: none !important;
+}
+
+#clock-box a {
+	font-size: 28px;
+	text-decoration: none;
+	color: #f5deb3;
+}
+
+#clock {
+	margin-left: 5px;
+}
+
+#clock .digit {
+	font-size: 38px;
+	color: #ff85c2;
+	text-shadow: 0 0 16px rgba(255,80,150,0.9);
+}
+
+#canvas {
+	margin: 0 auto;
+	width: 1100px;
+	height: 680px;
+}
+
+#error {
+	margin: 0 auto;
+	text-align: center;
+	margin-top: 60px;
+	display: none;
+	color: #fff5e6;
+}
+
+.hand {
+	cursor: pointer;
+}
+
+.say {
+	margin-left: 5px;
+}
+
+.space {
+	margin-right: 150px;
+}
