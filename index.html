@@ -2561,6 +2561,8 @@
             border:2px solid rgba(255,150,200,0.6);
             box-shadow:0 0 16px rgba(255,150,200,0.4);
         }
+        #match-carousel::-webkit-scrollbar { display: none; }
+        #match-carousel { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 
     <script>
@@ -2727,15 +2729,49 @@
             function showWin() {
                 grid.style.display = 'none'; statusEl.style.display = 'none';
                 winGrid.innerHTML = '';
-                IMAGES.forEach((src, i) => {
-                    const wrap = document.createElement('div');
-                    wrap.style.animation = `revealPop 0.5s ${i*0.1}s ease both`;
-                    const img = document.createElement('img'); img.src = src;
-                    img.addEventListener('click', () => { lbImg.src = src; lightbox.style.display = 'flex'; });
-                    wrap.appendChild(img); winGrid.appendChild(wrap);
-                });
                 winPanel.style.display = 'flex';
                 launchFireworks();
+
+                // marquee strip — เห็นหลายรูปพร้อมกัน เลื่อนช้าๆ
+                const wrapper = document.createElement('div');
+                wrapper.style.cssText = 'width:min(90vw,420px);overflow:hidden;position:relative;';
+
+                // fade ขอบซ้าย-ขวา
+                wrapper.style.webkitMaskImage = 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)';
+                wrapper.style.maskImage = 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)';
+
+                const track = document.createElement('div');
+                track.id = 'win-track';
+                track.style.cssText = 'display:flex;gap:10px;width:max-content;';
+
+                // วาง 3 รอบเพื่อ loop ไม่สะดุด
+                [...IMAGES, ...IMAGES, ...IMAGES].forEach(src => {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.style.cssText = 'height:160px;width:160px;object-fit:cover;border-radius:14px;border:2px solid rgba(255,105,180,0.6);box-shadow:0 0 14px rgba(255,105,180,0.4);flex-shrink:0;cursor:pointer;';
+                    img.addEventListener('click', () => { lbImg.src = src; lightbox.style.display = 'flex'; });
+                    track.appendChild(img);
+                });
+                wrapper.appendChild(track);
+                winGrid.appendChild(wrapper);
+
+                // animation — เลื่อนรูปชุดแรกออกให้หมด แล้ว reset
+                const itemW = 170; // 160 + 10 gap
+                const totalW = itemW * IMAGES.length;
+
+                const styleTag = document.getElementById('win-marquee-style') || document.createElement('style');
+                styleTag.id = 'win-marquee-style';
+                styleTag.textContent = `
+                    @keyframes winMarquee {
+                        0%   { transform: translateX(0); }
+                        100% { transform: translateX(-${totalW}px); }
+                    }
+                    #win-track {
+                        animation: winMarquee ${IMAGES.length * 2.5}s linear infinite;
+                    }
+                    #win-track:hover { animation-play-state: paused; }
+                `;
+                document.head.appendChild(styleTag);
             }
 
             closeBtn.addEventListener('click', () => {
