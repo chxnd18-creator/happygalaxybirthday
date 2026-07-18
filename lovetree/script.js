@@ -101,16 +101,16 @@
 
     var growAnimate = eval(Jscex.compile("async", function () {
         do {
-            tree.grow(); tree.grow(); tree.grow();
-            tree.grow(); tree.grow();
-            $await(Jscex.Async.sleep(2));
+            tree.grow();
+            tree.grow();
+            $await(Jscex.Async.sleep(8));
         } while (tree.canGrow());
     }));
 
     var flowAnimate = eval(Jscex.compile("async", function () {
         do {
-            tree.flower(15);
-            $await(Jscex.Async.sleep(2));
+            tree.flower(4);
+            $await(Jscex.Async.sleep(8));
         } while (tree.canFlower());
     }));
 

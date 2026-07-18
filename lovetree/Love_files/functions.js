@@ -16,12 +16,12 @@ $(window).resize(function () {
             var $ele = $(this);
             // แยกแต่ละ .say ออกมา fade in ทีละบรรทัด
             var spans = $ele.find('.say');
-            spans.css({ opacity: 0, transform: 'translateY(16px)', display: 'inline-block', transition: 'opacity 0.6s ease, transform 0.6s ease' });
+            spans.css({ opacity: 0, transform: 'translateY(16px)', display: 'inline-block', transition: 'opacity 0.8s ease, transform 0.8s ease' });
             spans.each(function(i) {
                 var $s = $(this);
                 setTimeout(function() {
                     $s.css({ opacity: 1, transform: 'translateY(0)' });
-                }, i * 700);
+                }, i * 1200);
             });
         });
         return this;
