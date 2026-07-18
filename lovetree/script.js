@@ -118,13 +118,13 @@
         tree.snapshot("p1", 240, 0, 610, 680);
         while (tree.move("p1", 500, 0)) {
             foot.draw();
-            $await(Jscex.Async.sleep(5));
+            $await(Jscex.Async.sleep(16));
         }
         foot.draw();
         tree.snapshot("p2", 500, 0, 610, 680);
         canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
         canvas.css("background", "#1a0010");
-        $await(Jscex.Async.sleep(150));
+        $await(Jscex.Async.sleep(300));
         canvas.css("background", "none");
     }));
 
@@ -133,7 +133,7 @@
             tree.ctx.clearRect(0, 0, width, height);
             tree.jump();
             foot.draw();
-            $await(Jscex.Async.sleep(20));
+            $await(Jscex.Async.sleep(33));
         }
     }));
 
