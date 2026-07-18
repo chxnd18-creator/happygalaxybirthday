@@ -89,28 +89,27 @@
             $await(Jscex.Async.sleep(10));
         }
         while (seed.canScale()) {
-            seed.scale(0.88);
-            $await(Jscex.Async.sleep(2));
+            seed.scale(0.92);
+            $await(Jscex.Async.sleep(16));
         }
         while (seed.canMove()) {
-            seed.move(0, 8);
+            seed.move(0, 4);
             foot.draw();
-            $await(Jscex.Async.sleep(2));
+            $await(Jscex.Async.sleep(16));
         }
     }));
 
     var growAnimate = eval(Jscex.compile("async", function () {
         do {
             tree.grow();
-            tree.grow();
-            $await(Jscex.Async.sleep(8));
+            $await(Jscex.Async.sleep(16));
         } while (tree.canGrow());
     }));
 
     var flowAnimate = eval(Jscex.compile("async", function () {
         do {
-            tree.flower(4);
-            $await(Jscex.Async.sleep(8));
+            tree.flower(2);
+            $await(Jscex.Async.sleep(16));
         } while (tree.canFlower());
     }));
 
@@ -118,7 +117,7 @@
         tree.snapshot("p1", 240, 0, 610, 680);
         while (tree.move("p1", 500, 0)) {
             foot.draw();
-            $await(Jscex.Async.sleep(16));
+            $await(Jscex.Async.sleep(25));
         }
         foot.draw();
         tree.snapshot("p2", 500, 0, 610, 680);
@@ -133,7 +132,7 @@
             tree.ctx.clearRect(0, 0, width, height);
             tree.jump();
             foot.draw();
-            $await(Jscex.Async.sleep(33));
+            $await(Jscex.Async.sleep(40));
         }
     }));
 
