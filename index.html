@@ -658,7 +658,7 @@
                 cv.width  = window.innerWidth;
                 cv.height = window.innerHeight;
                 const ctx = cv.getContext('2d');
-                const count = 3000;
+                const count = 800;
                 for(let i=0;i<count;i++){
                     const x = Math.random()*cv.width;
                     const y = Math.random()*cv.height;
@@ -2884,8 +2884,8 @@
             if (img) { img.style.transform = ''; img.style.opacity = '1'; }
             cardWrap.style.display  = 'none';
 
-            const maxW = Math.min(window.innerWidth  * 0.7, 700);
-            const maxH = Math.min(window.innerHeight * 0.7, 500);
+            const maxW = Math.min(window.innerWidth  * 0.95, 900);
+            const maxH = Math.min(window.innerHeight * 0.88, 680);
 
             const scale = Math.min(maxW / srcW, maxH / srcH);
             const cardW = Math.round(srcW * scale);
