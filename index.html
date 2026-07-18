@@ -54,7 +54,11 @@
             position: fixed; inset: 0; z-index: 20;
             display: flex; align-items: center; justify-content: center;
             overflow: hidden;
-            background: #fce4ec;
+            background:
+                radial-gradient(ellipse at 60% 30%, rgba(180,40,120,0.35), transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(255,105,180,0.2), transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(120,40,180,0.25), transparent 55%),
+                #0a0015;
             transition: opacity 0.5s ease, visibility 0.5s ease;
         }
         #start-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -125,6 +129,10 @@
         @keyframes startDrift {
             0%, 100% { transform: scale(1) translateY(0); }
             50%  { transform: scale(1.08) translateY(-8px); }
+        }
+        @keyframes twinkle {
+            0%,100% { opacity: 0.1; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(1.4); }
         }
         @media (max-width: 640px) {
             #start-card { border-radius: 22px; }
@@ -642,6 +650,42 @@
     <canvas id="bg-canvas"></canvas>
 
     <div id="start-overlay">
+        <!-- ดาวเหมือนกาแลคซี่ -->
+        <canvas id="start-star-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+        <script>
+            (function(){
+                const cv = document.getElementById('start-star-canvas');
+                cv.width  = window.innerWidth;
+                cv.height = window.innerHeight;
+                const ctx = cv.getContext('2d');
+                const count = 3000;
+                for(let i=0;i<count;i++){
+                    const x = Math.random()*cv.width;
+                    const y = Math.random()*cv.height;
+                    const r = Math.random()*1.2+0.2;
+                    const a = Math.random()*0.8+0.1;
+                    const hue = Math.random()<0.7 ? 0 : (Math.random()*60+200);
+                    ctx.beginPath();
+                    ctx.arc(x,y,r,0,Math.PI*2);
+                    ctx.fillStyle = hue===0
+                        ? `rgba(255,255,255,${a})`
+                        : `hsla(${hue},80%,80%,${a})`;
+                    ctx.fill();
+                }
+                window.addEventListener('resize',()=>{
+                    cv.width=window.innerWidth; cv.height=window.innerHeight;
+                    ctx.clearRect(0,0,cv.width,cv.height);
+                    for(let i=0;i<count;i++){
+                        const x=Math.random()*cv.width,y=Math.random()*cv.height;
+                        const r=Math.random()*1.2+0.2,a=Math.random()*0.8+0.1;
+                        const hue=Math.random()<0.7?0:(Math.random()*60+200);
+                        ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
+                        ctx.fillStyle=hue===0?`rgba(255,255,255,${a})`:`hsla(${hue},80%,80%,${a})`;
+                        ctx.fill();
+                    }
+                });
+            })();
+        </script>
         <div id="start-card">
             <img src="birthday.png"
                  style="width:min(90%,480px); display:block; margin:0 auto 16px; border-radius:16px; cursor:pointer;"
@@ -667,7 +711,7 @@
                 <div class="heart-runner" style="display:none;"></div>
             </div>
 
-            <p id="hold-instruction" style="font-size:14px; color:#c2547a; letter-spacing:0.15em; margin-top:14px; text-align:center; font-weight:600; text-shadow:0 1px 4px rgba(255,255,255,0.8);">กดค้างที่รูปเพื่อเข้า 🎂</p>
+            <p id="hold-instruction" style="font-size:14px; color:#fff; letter-spacing:0.15em; margin-top:14px; text-align:center; font-weight:600; text-shadow:0 0 12px rgba(255,105,180,0.8);">กดค้างที่รูปเพื่อเข้า 🎂</p>
             <button id="start-button" style="display:none">ENTER</button>
         </div>
     </div>
@@ -743,12 +787,12 @@
     
     
     <script id="plate-gen">
-      
+      //โพลารอยด์
          
         window.plates = [
             {
                 "name": "25/09/2024",
-                "message": "วันครบรอบของเรา ดีใจมากที่มีเธอเป็นแฟน มีเธอแล้วเค้าอุ่นใจทุกครั้งเลย 💖",
+                "message": "วันนั้นไปเดินตากแดดกัน แต่เธอก็ไม่บ่นแถมยอมถ่ายรูปด้วยกันอีก",
                 "popupSrc": "love1.jpg",
                 "photoSrc": "1.jpg",
                 "src": "stick5.png",
@@ -758,7 +802,7 @@
             },
             {
                 "name": "02/04/2025",
-                "message": "ไปเจอพ่อแม่เธอครั้งแรก เค้าเกร็งมากแต่พ่อแม่เธอน่ารักกับเค้ามากๆ เลย 🌟",
+                "message": "ไปเจอใบไม้สีสวยมาก แวะถ่ายรูปหน่อยยย",
                 "popupSrc": "love2.jpg",
                 "photoSrc": "2.jpg",
                 "src": "stick5.png",
@@ -768,7 +812,7 @@
             },
             {
                 "name": "26/09/2024",
-                "message": "ไปกินแมคโดนัลด์ด้วยกันครั้งแรก อร่อยมากเลยยย 💖",
+                "message": "ไปปั่นจักรยานด้วยกันทุกที่เลยย",
                 "popupSrc": "love3.jpg",
                 "photoSrc": "3.jpg",
                 "src": "stick5.png",
@@ -778,13 +822,13 @@
             },
             {
                 "name": "10/05/2025",
-                "message": "รูปนี้ตลกอะ อยากไปถ่ายรูปแปลกๆที่ซุปเปอร์มาร์เก็ตกันอีกเยอะๆ เลย 💕",
+                "message": "ไปทำอะไรเพี้ยนๆด้วยกันอีกนะ",
                 "popupSrc": "love4.jpg",
                 "photoSrc": "4.jpg",
                 "src": "stick5.png",
                 "hue": 325,
                 "pattern": "none",
-                "effect": "normal"
+                "effect": "polaroid"
             },
             {
                 "name": "เวลาของเรา",
@@ -1200,13 +1244,13 @@
             if (p.src) {
                 gifEl = document.createElement('img');
                 gifEl.src = p.src;
+                gifEl.dataset.plateIndex = i;
                 gifEl.style.cssText = `
-                    position:fixed; z-index:2; cursor:pointer; pointer-events:auto;
+                    position:fixed; z-index:1; pointer-events:none;
                     width:90px; height:90px; object-fit:contain;
                     transform: translate(-50%,-50%);
                     display:none;
                 `;
-                gifEl.addEventListener('click', () => showPlateMessage(p, i));
                 document.body.appendChild(gifEl);
             }
 
